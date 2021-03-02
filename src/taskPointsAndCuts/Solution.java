@@ -17,26 +17,7 @@ public class Solution {
         Map<Integer, Integer> result = new HashMap<>();
         int counter = 0;
 
-        // add points to List
-        List<Point> points = new ArrayList<>();
-        for (Integer number : numbers) {
-            points.add( new Point( number, Poinkind.POINT ) );
-        }
-        for (Cut cut : cuts) {
-            points.add( new Point( cut.getLeft(), Poinkind.BEGIN ) );
-            points.add( new Point( cut.getRight(), Poinkind.END ) );
-        }
-
-        // sort Points (if values are the same - compare kinds of the points)
-        Comparator<Point> byValueAndKind = new Comparator<Point>() {
-            @Override
-            public int compare(Point p1, Point p2) {
-                if (p1.getValue() == p2.getValue())
-                    return p1.getKind().compareTo( p2.getKind() );
-                return p1.getValue() - p2.getValue();
-            }
-        };
-        points.sort( byValueAndKind );
+        List<Point> points=getSortedListOfPoints(numbers, cuts);
 
         for (Point point : points) {
             if (point.getKind() == Poinkind.BEGIN)
@@ -47,5 +28,19 @@ public class Solution {
                 result.put( point.getValue(), counter );
         }
         return result;
+    }
+
+    public List<Point> getSortedListOfPoints(List<Integer> numbers, List<Cut> cuts){
+        List<Point> points = new ArrayList<>();
+        for (Integer number : numbers) {
+            points.add( new Point( number, Poinkind.POINT ) );
+        }
+        for (Cut cut : cuts) {
+            points.add( new Point( cut.getLeft(), Poinkind.BEGIN ) );
+            points.add( new Point( cut.getRight(), Poinkind.END ) );
+        }
+        // sort Points (if values are the same - compare kinds of the points)
+        points.sort( new PointSortingByValueAndKindComparator() );
+        return points;
     }
 }
