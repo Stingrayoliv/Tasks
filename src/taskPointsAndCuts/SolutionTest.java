@@ -29,7 +29,7 @@ class SolutionTest {
     }
 
     @Test
-    void getNumbersOfTimesPointInCuts_PointHasKindsInTheSameTime_test3() {
+    void getNumbersOfTimesPointInCuts_PointHasThreeKindsInTheSameTime_test3() {
         List<Integer> numbers = Arrays.asList( 3 );
         List<Cut> cuts = Arrays.asList(
                 new Cut( 1, 3 ),
